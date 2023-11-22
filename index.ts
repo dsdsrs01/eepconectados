@@ -1,10 +1,9 @@
 import { Router, Response, Request } from 'express'
 
-const router = Router()
+const route = Router()
 
-router.get('/', (req: Request, res: Response) => {
+route.get('/', (req: Request, res: Response) => {
     return res.json({ name: 'Yuri Batista' })
 })
 
-
-export { router }
+export { route }
