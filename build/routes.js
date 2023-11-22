@@ -15,6 +15,3 @@ router.post('/session', new CreateUserController_1.CreateUserController().handle
 router.get('/list', new ListUserController_1.ListUserController().handle);
 router.post('/message', isAuthenticated_1.isAuthenticated, new CreateChatController_1.CreateChatController().handle);
 router.get('/message/list', isAuthenticated_1.isAuthenticated, new ListChatController_1.ListChatController().handle);
-router.get('/', (req, res) => {
-    return res.json({ name: 'Yuri Batista' });
-});
