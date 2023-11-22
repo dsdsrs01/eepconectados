@@ -1,27 +1,27 @@
-import { Router, Response, Request } from 'express'
+import express, { Request, Response, NextFunction } from 'express'
+import 'express-async-errors'
+import cors from 'cors'
 
-import { CreateUserController } from './controller/user/CreateUserController'
-import { AuthUserController } from './controller/user/AuthUserController'
-import { ListUserController } from './controller/user/ListUserController'
-import { CreateChatController } from './controller/chat/CreateChatController'
-import { ListChatController } from './controller/chat/ListChatController'
+import { router } from './routes'
 
-import { isAuthenticated } from './middlewares/isAuthenticated'
+const app = express();
+app.use(express.json());
+app.use(cors()) //Qual quer ip vai poder fazer requisao a essa API
 
-const router = Router()
+app.use(router);
 
-router.post('/users', new AuthUserController().handle)
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    if(err instanceof Error){
+        // se for uma instancia do tipo error
+        return res.status(400).json({
+            error: err.message
+        })
+    }
 
-router.post('/session', new CreateUserController().handle)
+    return res.status(500).json({
+        status: 'error',
+        message: 'Internal server error'
+    })
+});
 
-router.get('/list', new ListUserController().handle)
-
-router.post('/message', isAuthenticated, new CreateChatController().handle)
-
-router.get('/message/list', isAuthenticated, new ListChatController().handle)
-
-router.get('/', (req: Request, res: Response) => {
-    return res.json({ name: 'Yuri Batista' })
-})
-
-export { router }
+app.listen(process.env.PORT || 3333, () => console.log('Servidor online!'))
