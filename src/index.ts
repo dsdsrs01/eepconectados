@@ -20,7 +20,7 @@ router.post('/message', isAuthenticated, new CreateChatController().handle)
 
 router.get('/message/list', isAuthenticated, new ListChatController().handle)
 
-router.get('/teste1', (req: Request, res: Response) => {
+router.get('/', (req: Request, res: Response) => {
     return res.json({ name: 'Yuri Batista' })
 })
 
