@@ -13,7 +13,7 @@ class CreateUserService {
             throw new Error("Email não valido!")
        }
 
-       const userAlreadyExits = await prismaClient.user.findFirst({
+       const userAlreadyExits = await prismaClient.users.findFirst({
             where: {
                 email: email,
                 name: name,
